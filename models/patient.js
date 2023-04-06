@@ -12,9 +12,9 @@ const patientSchema = new mongoose.Schema({
         required: true,
         enum: [
           "Negative",
-          "Travelled - Quarantine",
-          "Symptoms - Quarantine",
-          "Positive - Admit",
+          "Travelled-Quarantine",
+          "Symptoms-Quarantine",
+          "Positive-Admit",
         ],
       },
       date: {
