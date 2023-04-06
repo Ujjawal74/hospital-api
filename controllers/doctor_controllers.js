@@ -9,16 +9,14 @@ const registerDoctor = async (req, res) => {
 
   req.body.password = await hashPassword(req.body.password);
   const doctor = new Doctor(req.body);
-
-  res.status(200).json({ status: "registered doctor!" });
   doctor
     .save()
     .then((data) => {
       const token = createToken({ id: data.id });
-      // res.cookie("my_session", token, {
-      //   expires: new Date(Date.now() + 300000),
-      //   httpOnly: true,
-      // });
+      res.cookie("my_session", token, {
+        expires: new Date(Date.now() + 300000),
+        httpOnly: true,
+      });
       res.status(200).json({ status: "registered doctor!" });
     })
     .catch((e) => {
@@ -40,10 +38,10 @@ const loginDoctor = async (req, res) => {
       const isMatch = await compareHash(pass, doctor.password);
       if (isMatch) {
         const token = createToken({ id: doctor.id });
-        // res.cookie("my_session", token, {
-        //   expires: new Date(Date.now() + 300000),
-        //   httpOnly: true,
-        // });
+        res.cookie("my_session", token, {
+          expires: new Date(Date.now() + 300000),
+          httpOnly: true,
+        });
 
         res.status(200).json({ status: "login success!", token: token });
       } else {
